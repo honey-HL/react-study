@@ -1,6 +1,10 @@
 export default function createStore(reducer, enhancer) {
   if (enhancer) {
     // 原版dispatch只能接受普通对象，加强之后变强大，可以处理多种形式，如callback、promise等
+    // const store = createStore(
+    //   countReducer,
+    //   applyMiddleware(thunk, logger, promise)
+    // );
     return enhancer(createStore)(reducer);
   }
   let currentState;
@@ -14,6 +18,8 @@ export default function createStore(reducer, enhancer) {
   }
   function subscribe(listener) {
     currentListeners.push(listener);
+    console.log('currentListeners==>',currentListeners)
+    console.log('length==>', currentListeners.length)
 
     return () => {
       // 自己实现过滤
